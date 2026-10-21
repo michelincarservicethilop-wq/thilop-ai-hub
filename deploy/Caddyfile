@@ -1,0 +1,32 @@
+# DOMAIN lấy từ file .env. Ví dụ ai.thilop.vn → Caddy tự xin và gia hạn chứng chỉ HTTPS.
+# Chạy thử bằng IP (chưa có tên miền): đặt DOMAIN=:80
+{$DOMAIN} {
+	encode gzip
+
+	request_body {
+		max_size 30MB
+	}
+
+	# Chỉ /api/..., /v1/..., /webhooks/... vào backend (trang /api-keys là giao diện)
+	@backend path /api/* /v1/* /webhooks/*
+	handle @backend {
+		reverse_proxy api:8000 {
+			flush_interval -1
+			transport http {
+				read_timeout 10m
+			}
+		}
+	}
+
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+}
