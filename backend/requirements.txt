@@ -1,0 +1,25 @@
+# Thư viện backend Thi Lốp AI Hub (Python 3.12+). Đã chạy thử với các bản ghi trong ngoặc.
+fastapi>=0.115,<1                 # (0.115.14)
+uvicorn[standard]>=0.30,<1        # (0.54.0)
+sqlalchemy>=2.0.30,<2.2           # (2.1.6)
+psycopg[binary]>=3.2,<4           # (3.3.6)
+pgvector>=0.3,<0.6                # (0.5.1)
+pydantic>=2.7,<3                  # (2.14.1)
+pydantic-settings>=2.3,<3         # (2.16.1)
+pyjwt>=2.8,<3                     # (2.15.1)
+bcrypt>=4.1,<6                    # (5.0.0)
+redis>=5,<9                       # (8.1.0)
+litellm==1.106.2                  # khoá đúng bản đã chạy thử (LiteLLM đổi nhanh)
+httpx>=0.27,<1                    # (0.28.1)
+python-multipart>=0.0.9           # (0.0.32) — nhận file tải lên
+pyyaml>=6,<7                      # (6.0.3)
+
+# Tài liệu & Ứng dụng AI
+pypdf>=4,<7                       # (6.21.2)
+python-docx>=1.1,<2               # (1.2.0)
+openpyxl>=3.1,<4                  # (3.1.5)
+pandas>=2.2,<4                    # (3.0.6)
+mutagen>=1.47,<2                  # (1.48.1) — đo độ dài ghi âm để tính phí chuyển giọng nói
+
+# Kiểm thử
+pytest>=8,<10                     # (9.1.1)
