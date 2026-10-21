@@ -1,0 +1,157 @@
+# Dữ liệu khởi tạo lần đầu. Sau khi cài, sửa trong trang Quản trị (không cần sửa file này).
+# Giá: VND cho 1 triệu token, quy đổi 26.000đ/$ từ bảng giá chính thức các hãng, kiểm tra ngày 22/10/2026.
+# Hãng đổi giá thì sửa lại trong Quản trị › Model.
+
+models:
+  - id: claude-haiku
+    label: Claude Haiku 5.5
+    provider_model: anthropic/claude-haiku-5-5
+    vision: true
+    note: Rẻ, nhanh, tiếng Việt tốt — việc dễ, trả lời khách
+    price_in_vnd: 2600
+    price_out_vnd: 13000
+    price_cache_vnd: 260
+    fallback_id: gpt-luna
+    sort: 10
+  - id: claude-sonnet
+    label: Claude Sonnet 5.5
+    provider_model: anthropic/claude-sonnet-5-5
+    vision: true
+    note: Viết bài, kịch bản, tiếng Việt tự nhiên
+    price_in_vnd: 52000
+    price_out_vnd: 260000
+    price_cache_vnd: 2600
+    fallback_id: gpt-sol
+    sort: 20
+  - id: claude-opus
+    label: Claude Opus 5.5
+    provider_model: anthropic/claude-opus-5-5
+    vision: true
+    admin_only: true
+    note: Việc khó — chỉ admin chọn trực tiếp; router vẫn dùng cho việc khó
+    price_in_vnd: 104000
+    price_out_vnd: 520000
+    price_cache_vnd: 5200
+    fallback_id: gpt-sol
+    sort: 30
+  - id: gemini-flash
+    label: Gemini 3.8 Flash
+    provider_model: gemini/gemini-3.8-flash
+    vision: true
+    note: Đọc ảnh hoá đơn, tài liệu dài (Google tăng giá từ 01/01/2027)
+    price_in_vnd: 19500
+    price_out_vnd: 97500
+    price_cache_vnd: 1950
+    fallback_id: claude-haiku
+    sort: 40
+  - id: gemini-flash-lite
+    label: Gemini 3.5 Flash-Lite
+    provider_model: gemini/gemini-3.5-flash-lite
+    vision: true
+    note: Rất rẻ
+    price_in_vnd: 7800
+    price_out_vnd: 65000
+    price_cache_vnd: 780
+    sort: 45
+  - id: gpt-luna
+    label: GPT 6 Luna
+    provider_model: openai/gpt-6-luna
+    vision: true
+    note: Rẻ nhất của OpenAI, dự phòng việc dễ
+    price_in_vnd: 2600
+    price_out_vnd: 13000
+    price_cache_vnd: 260
+    sort: 50
+  - id: gpt-sol
+    label: GPT 6.1 Sol
+    provider_model: openai/gpt-6.1-sol
+    vision: true
+    note: Dự phòng viết bài, việc khó
+    price_in_vnd: 52000
+    price_out_vnd: 260000
+    price_cache_vnd: 2600
+    sort: 60
+  - id: gpt-astra
+    label: GPT 6 Astra
+    provider_model: openai/gpt-6-astra
+    vision: true
+    admin_only: true
+    enabled: false
+    note: Mạnh nhất của OpenAI, đắt — tắt sẵn
+    price_in_vnd: 260000
+    price_out_vnd: 1300000
+    price_cache_vnd: 26000
+    sort: 70
+  - id: deepseek-flash
+    label: DeepSeek Flash
+    provider_model: deepseek/deepseek-flash
+    note: Rẻ; cần DEEPSEEK_API_KEY (giá giờ cao điểm)
+    enabled: false
+    price_in_vnd: 7800
+    price_out_vnd: 31200
+    price_cache_vnd: 156
+    sort: 80
+  - id: embed-small
+    label: OpenAI text-embedding-3-small
+    provider_model: openai/text-embedding-3-small
+    kind: embedding
+    note: Tạo vector cho Hỏi tài liệu
+    price_in_vnd: 520
+    price_out_vnd: 0
+    sort: 200
+  - id: transcribe
+    label: OpenAI gpt-transcribe
+    provider_model: openai/gpt-transcribe
+    kind: stt
+    note: Chuyển ghi âm thành chữ (0,0045$/phút)
+    price_per_minute_vnd: 117
+    sort: 210
+
+routes:
+  - task: easy
+    label: Trả lời khách, tóm tắt, dịch, hỏi đáp ngắn
+    primary_model: claude-haiku
+    fallback_model: gpt-luna
+    sort: 10
+  - task: vision
+    label: Đọc ảnh hoá đơn, phiếu nhập, ảnh chụp
+    primary_model: gemini-flash
+    fallback_model: claude-haiku
+    sort: 20
+  - task: writing
+    label: Bài fanpage, kịch bản TikTok, caption
+    primary_model: claude-sonnet
+    fallback_model: gpt-sol
+    sort: 30
+  - task: hard
+    label: Hợp đồng, phân tích dài, viết code
+    primary_model: claude-opus
+    fallback_model: gpt-sol
+    sort: 40
+
+branches:
+  - name: Lê Văn Lương
+    address: 68 Lê Văn Lương
+    keywords: lê văn lương, le van luong, lvl
+    monthly_limit_vnd: 1500000
+  - name: Phạm Văn Đồng
+    keywords: phạm văn đồng, pham van dong, pvd
+    monthly_limit_vnd: 1500000
+
+prompts:
+  - scope: chat
+    title: Trả lời khách hỏi giá thay lốp
+    text: "Khách hỏi giá thay lốp. Hãy soạn tin trả lời lịch sự theo mẫu Thi Lốp: chào khách, nêu các lựa chọn lốp phù hợp (để trống giá dạng [GIÁ] nếu chưa có), dịch vụ đi kèm, mời đặt lịch. Thông tin khách: "
+    sort: 10
+  - scope: chat
+    title: Soạn tin nhắc bảo dưỡng định kỳ
+    text: "Soạn tin nhắn ngắn (dưới 60 chữ) nhắc khách đã tới lịch bảo dưỡng định kỳ, mời đặt lịch tại cơ sở Thi Lốp gần nhất. Thông tin khách: "
+    sort: 20
+  - scope: chat
+    title: Giải thích keo chống đinh cho khách
+    text: "Giải thích ngắn gọn, dễ hiểu cho khách: keo chống đinh hoạt động thế nào, lợi ích, lưu ý khi dùng. Giọng thân thiện, không hứa quá mức."
+    sort: 30
+  - scope: chat
+    title: Tóm tắt phản hồi khách
+    text: "Tóm tắt các phản hồi khách dưới đây thành: điểm khen, điểm chê, việc cần làm ngay. Phản hồi: "
+    sort: 40
