@@ -30,7 +30,7 @@ cd thilop-ai-hub
 ## 3. Tạo file cấu hình `.env`
 
 ```bash
-./deploy/gen-secrets.sh
+bash deploy/gen-secrets.sh
 ```
 
 Lệnh này tạo file `.env`, tự sinh mật khẩu CSDL, khoá bảo mật và **in ra mật khẩu admin lần đầu** — anh chép lại. Sau đó mở file để điền:
@@ -136,7 +136,7 @@ crontab -e
 Thêm dòng:
 
 ```
-0 2 * * * /opt/thilop-ai-hub/deploy/backup.sh >> /var/log/hub-backup.log 2>&1
+0 2 * * * bash /opt/thilop-ai-hub/deploy/backup.sh >> /var/log/hub-backup.log 2>&1
 ```
 
 Bản sao lưu nằm trong `/opt/thilop-ai-hub/backups`. Nên chép thư mục này sang máy khác định kỳ.
