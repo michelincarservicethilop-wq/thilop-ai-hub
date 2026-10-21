@@ -1,0 +1,12 @@
+# Ngữ cảnh build của dịch vụ web (deploy/Dockerfile.web) là thư mục gốc.
+# Thiếu file này thì `COPY frontend/ ./` chép đè node_modules của máy dev lên bản `npm ci` trong image
+# (sai binary rollup/esbuild khi máy dev khác hệ điều hành) và gửi cả .env, .venv, backups/ vào ngữ cảnh build.
+.git
+.env
+.venv
+backups
+**/node_modules
+frontend/dist
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
